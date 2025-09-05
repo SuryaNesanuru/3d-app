@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, Float, Text } from '@react-three/drei';
@@ -15,7 +15,14 @@ const skills = [
   { name: 'Docker', level: 68, color: '#2496ED', size: 0.6 },
 ];
 
-function SkillSphere({ skill, index }: { skill: any; index: number }) {
+interface Skill {
+  name: string;
+  level: number;
+  color: string;
+  size: number;
+}
+
+function SkillSphere({ skill, index }: { skill: Skill; index: number }) {
   const meshRef = useRef<THREE.Mesh>(null);
   
   useFrame((state) => {

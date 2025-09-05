@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ExternalLink, Github, X } from 'lucide-react';
 
 const projects = [
   {
@@ -68,7 +68,19 @@ const projects = [
   }
 ];
 
-function ProjectCard({ project, onClick }: { project: any; onClick: () => void }) {
+interface Project {
+  id: number;
+  title: string;
+  category: string;
+  description: string;
+  fullDescription: string;
+  technologies: string[];
+  image: string;
+  metrics: Record<string, string>;
+  features: string[];
+}
+
+function ProjectCard({ project, onClick }: { project: Project; onClick: () => void }) {
   return (
     <motion.div
       layout
@@ -153,7 +165,7 @@ function ProjectCard({ project, onClick }: { project: any; onClick: () => void }
   );
 }
 
-function ProjectModal({ project, onClose }: { project: any; onClose: () => void }) {
+function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -261,7 +273,7 @@ function ProjectModal({ project, onClose }: { project: any; onClose: () => void 
 }
 
 export default function ProjectsSection() {
-  const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 

@@ -65,7 +65,21 @@ const experiences = [
   }
 ];
 
-function ExperienceCard({ experience, index }: { experience: any; index: number }) {
+interface Experience {
+  company: string;
+  position: string;
+  duration: string;
+  location: string;
+  type: string;
+  description: string;
+  achievements: string[];
+  technologies: string[];
+  metrics: {
+    [key: string]: string | undefined;
+  };
+}
+
+function ExperienceCard({ experience, index }: { experience: Experience; index: number }) {
   const isEven = index % 2 === 0;
   
   return (
@@ -106,12 +120,14 @@ function ExperienceCard({ experience, index }: { experience: any; index: number 
         </p>
         
         <div className="grid grid-cols-3 gap-4 mb-6">
-          {Object.entries(experience.metrics).map(([key, value]) => (
-            <div key={key} className="text-center">
-              <div className="text-lg font-bold text-blue-400">{value as string}</div>
-              <div className="text-white/50 text-xs capitalize">{key}</div>
-            </div>
-          ))}
+          {Object.entries(experience.metrics)
+            .filter(([, value]) => value !== undefined)
+            .map(([key, value]) => (
+              <div key={key} className="text-center">
+                <div className="text-lg font-bold text-blue-400">{value}</div>
+                <div className="text-white/50 text-xs capitalize">{key}</div>
+              </div>
+            ))}
         </div>
         
         <div className="mb-6">
